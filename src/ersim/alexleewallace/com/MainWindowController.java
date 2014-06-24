@@ -18,8 +18,15 @@ public class MainWindowController implements ActionListener {
 	
 	JTextField myCommandField;
 	
-	public MainWindowController() {
+	/*
+	 * Connected pieces
+	 * 
+	 */
+	MainController mc;
+	
+	public MainWindowController(MainController mc) {
 		setup();
+		this.mc = mc;
 	}
 	
 	private void setup() {
@@ -51,8 +58,11 @@ public class MainWindowController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == myCommandField) {
-			if (!myCommandField.getText().isEmpty()) {
-				info += "\n" + myCommandField.getText();
+			String userInput = myCommandField.getText();
+			if (!userInput.isEmpty()) {
+				info += "> " + userInput + "\n";
+				String result = mc.processInput(userInput);
+				info += result + "\n";
 				myCommandField.setText("");
 				myInfoArea.setText(info);
 			}
